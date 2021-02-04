@@ -99,7 +99,7 @@ class Jump extends TimerTask{
 	}
 	public void run() {
 		 
-		System.out.println("Springen");
+		System.out.println("Springen"); 
 		bot.keyPress(KeyEvent.VK_UP);
 	    bot.keyRelease(KeyEvent.VK_UP);  
 		this.cancel();
