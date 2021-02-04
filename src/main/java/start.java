@@ -33,16 +33,15 @@ public class start {
 
 // Klasse um statische Variablen Abzuspeichern und Abzufragen
 class tools  {
-	static Color Farbe;
+	static Color Farbe, graufarbe;
 	static Robot rob;
-	static Color graufarbe;
 	static int Wartezeit;
 
 	tools() throws AWTException{
 		rob = new Robot();
 		Farbe = new Color(0,0,0);	
 		graufarbe = new Color(83,83,83);
-		Wartezeit = 1090;
+		Wartezeit = 1100;
 		}
 	
 	
@@ -78,9 +77,9 @@ class detection extends TimerTask {
 	
 // Test ob Pixel Grau ist
 	public void run() {
-		tools.scancolor();
+					tools.scancolor();
 		
-				if (tools.farbenausgabe().equals(tools.farbenausgabestandart())) {
+					if (tools.farbenausgabe().equals(tools.farbenausgabestandart())) {
 			
 					tools.pressspace();
 					System.out.println("Objekt erkannt");
