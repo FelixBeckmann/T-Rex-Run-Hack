@@ -6,119 +6,75 @@ import java.util.Timer;
 import java.util.TimerTask;
 // Start
 public class start {
-
-
-	public static void main(String[] args) throws AWTException {
-			
-			// Aufrufen der anderen Klassen
-			detection detect = new detection();
-			tools tol = new tools();
-			
-			
-			
-			// Timer erstellen um immerwieder Code auszuführen
-			Timer timer = new Timer();
-			timer.schedule(detect, 0,1);
-	
-			/*
-			score sc = new score();
-			Timer scoretim = new Timer();
-			scoretim.schedule(sc, 0, 1000);*/
-			}
-	
-			
-			
-
-}
-
-// Klasse um statische Variablen Abzuspeichern und Abzufragen
-class tools  {
-	static Color Farbe, graufarbe;
-	static Robot rob;
+	static Color Grauefarbe, Pixelfarbe;
 	static int Wartezeit;
 
-	tools() throws AWTException{
-		rob = new Robot();
-		Farbe = new Color(0,0,0);	
-		graufarbe = new Color(83,83,83);
+	public static void main(String[] args) throws AWTException {
+		
+		Grauefarbe = new Color(83,83,83);
 		Wartezeit = 1100;
-		}
-	
-	
-	
-	public static void scancolor() { 
-		Farbe = rob.getPixelColor(1200,481);
-		}
-	
-	
-	public static void pressspace()  {
 		
-				try {
-					new Timer().schedule(new Jump(), Wartezeit);
-				} catch (AWTException e) {
-					System.out.println("Aufgehalten");
-					e.printStackTrace();
-				}
-	}
-	
-	public static Color farbenausgabe(){
-		return Farbe;
-	}
-	public static Color farbenausgabestandart(){
-		return graufarbe;
-	}
-}
-
-
-//Klasse mit Code zum immerwieder ausführen
-
-class detection extends TimerTask {
-
-	
-// Test ob Pixel Grau ist
-	public void run() {
-					tools.scancolor();
-		
-					if (tools.farbenausgabe().equals(tools.farbenausgabestandart())) {
+		new bothenry();
+		new Zeitbedingtebefehle();
 			
-					tools.pressspace();
-					System.out.println("Objekt erkannt");
-					}
+	}
+}
+// Roboter Klasse
+class bothenry {
+	static Robot rob;
+	
+	
+	public bothenry() throws AWTException {
+		rob = new Robot();
+	}
+	
+	public static void suchpixelfarbe() {
+		start.Pixelfarbe = rob.getPixelColor(1200,481);
+	}
+	public static void pressspace() {
+		rob.keyPress(KeyEvent.VK_SPACE);
+		rob.keyRelease(KeyEvent.VK_SPACE);
+	}
+	public static void pressarrowdown() {
+		rob.keyPress(KeyEvent.VK_DOWN);
+		rob.keyRelease(KeyEvent.VK_DOWN);
+	}
+	
+}
+
+class Zeitbedingtebefehle {
+	
+	static Timer timepixelabfrage, timejumping;
+	
+	public Zeitbedingtebefehle() {
+		
+			timepixelabfrage = new Timer();
+			timejumping = new Timer();
+			
+				timepixelabfrage.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+					
+					bothenry.suchpixelfarbe();
+						if(start.Pixelfarbe.equals(start.Grauefarbe)) {
+						jump();
+						}
+				
+					}}, 0,1);
+	}
+	
+		public void jump() {
+		
+				timejumping.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+				
+					bothenry.pressspace();
+					this.cancel();
+				
+					}},start.Wartezeit );
 		}
-}
-
-// Klasse zum Springen
-class Jump extends TimerTask{
-	Robot bot;
-
-	
-	Jump() throws AWTException{
-		bot = new Robot();
-		
-	}
-	public void run() {
-		 
-		System.out.println("Springen"); 
-		bot.keyPress(KeyEvent.VK_UP);
-	    bot.keyRelease(KeyEvent.VK_UP);  
-		this.cancel();
-		 
-		
-		
-	}
-	
 	
 }
-
-/*class score extends TimerTask{
-
-	@Override
-	public void run() {
-			tools.Wartezeit = tools.Wartezeit-3;
-		
-	}
-	
-	
-}
-
-*/
