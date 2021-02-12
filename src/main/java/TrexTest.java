@@ -11,7 +11,7 @@ public class TrexTest {
 	
 	public static void main(String[] args) {
 		
-		Color graufarbe = new Color(83,83,83);
+		final Color graufarbe = new Color(83,83,83);
 		Timer timer = new Timer();
 		
 		timer.scheduleAtFixedRate(new TimerTask() {
