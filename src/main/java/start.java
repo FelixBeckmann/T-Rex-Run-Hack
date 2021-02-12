@@ -42,7 +42,7 @@ class tools  {
 		rob = new Robot();
 		Farbe = new Color(0,0,0);	
 		graufarbe = new Color(83,83,83);
-		Wartezeit = 1090;
+		Wartezeit = 1100;
 		}
 	
 	
@@ -100,8 +100,8 @@ class Jump extends TimerTask{
 	public void run() {
 		 
 		System.out.println("Springen"); 
-		bot.keyPress(KeyEvent.VK_UP);
-	    bot.keyRelease(KeyEvent.VK_UP);  
+		bot.keyPress(KeyEvent.VK_SPACE);
+	    bot.keyRelease(KeyEvent.VK_SPACE);  
 		this.cancel();
 		 
 		
